@@ -1,0 +1,215 @@
+
+<style>
+  .cbre-form { font-family: var(--font-sans); max-width: 680px; margin: 0 auto; padding: 1.5rem 0; }
+  .cbre-header { display: flex; align-items: center; gap: 14px; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .cbre-logo { background: #003F2D; color: #fff; font-weight: 500; font-size: 13px; letter-spacing: 0.08em; padding: 6px 10px; border-radius: 4px; white-space: nowrap; }
+  .cbre-header-text { font-size: 11px; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.1em; }
+  .alert-banner { background: var(--color-background-danger); border: 0.5px solid var(--color-border-danger); border-radius: var(--border-radius-md); padding: 10px 14px; display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; }
+  .alert-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-text-danger); flex-shrink: 0; }
+  .alert-text { font-size: 13px; color: var(--color-text-danger); font-weight: 500; }
+  .section-label { font-size: 11px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 10px; }
+  .form-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.25rem; margin-bottom: 1rem; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .row.full { grid-template-columns: 1fr; }
+  .row.three { grid-template-columns: 1fr 1fr 1fr; }
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field label { font-size: 12px; color: var(--color-text-secondary); font-weight: 500; }
+  .field label span { color: var(--color-text-danger); margin-left: 2px; }
+  .field input, .field select, .field textarea { font-size: 14px; }
+  .field textarea { resize: vertical; min-height: 80px; }
+  .priority-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 0; }
+  .priority-btn { padding: 8px 12px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-tertiary); background: var(--color-background-primary); cursor: pointer; font-size: 13px; text-align: center; transition: all 0.15s; color: var(--color-text-secondary); }
+  .priority-btn:hover { background: var(--color-background-secondary); }
+  .priority-btn.active-high { border: 1.5px solid var(--color-border-danger); background: var(--color-background-danger); color: var(--color-text-danger); font-weight: 500; }
+  .priority-btn.active-med { border: 1.5px solid var(--color-border-warning); background: var(--color-background-warning); color: var(--color-text-warning); font-weight: 500; }
+  .priority-btn.active-low { border: 1.5px solid var(--color-border-success); background: var(--color-background-success); color: var(--color-text-success); font-weight: 500; }
+  .submit-row { display: flex; align-items: center; justify-content: space-between; margin-top: 1.25rem; }
+  .submit-btn { background: #003F2D; color: #fff; border: none; padding: 10px 28px; border-radius: var(--border-radius-md); font-size: 14px; font-weight: 500; cursor: pointer; letter-spacing: 0.02em; }
+  .submit-btn:hover { background: #00563D; }
+  .cancel-btn { font-size: 13px; color: var(--color-text-secondary); background: none; border: none; cursor: pointer; padding: 10px; }
+  .cancel-btn:hover { color: var(--color-text-primary); }
+  .divider { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 1rem 0; }
+  .timestamp { font-size: 11px; color: var(--color-text-secondary); }
+</style>
+
+<div class="cbre-form">
+  <h2 class="sr-only">CBRE Emergency Contact Form</h2>
+
+  <div class="cbre-header">
+    <div class="cbre-logo">CBRE</div>
+    <div>
+      <div style="font-size: 15px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 2px;">Emergency Contact Form</div>
+      <div class="cbre-header-text">Property &amp; Facilities Management</div>
+    </div>
+  </div>
+
+  <div class="alert-banner">
+    <div class="alert-dot"></div>
+    <div class="alert-text">For life-threatening emergencies, call 999 / 112 immediately before completing this form.</div>
+  </div>
+
+  <p class="section-label">Incident priority</p>
+  <div class="form-card" style="margin-bottom: 1rem;">
+    <div class="priority-grid">
+      <button class="priority-btn active-high" onclick="setPriority(this,'high')">
+        <div style="font-size: 11px; margin-bottom: 2px;">Critical</div>
+        <div>Life / Safety</div>
+      </button>
+      <button class="priority-btn" onclick="setPriority(this,'med')">
+        <div style="font-size: 11px; margin-bottom: 2px;">Urgent</div>
+        <div>Operations at risk</div>
+      </button>
+      <button class="priority-btn" onclick="setPriority(this,'low')">
+        <div style="font-size: 11px; margin-bottom: 2px;">Non-urgent</div>
+        <div>Minor disruption</div>
+      </button>
+    </div>
+  </div>
+
+  <p class="section-label">Reporter details</p>
+  <div class="form-card">
+    <div class="row">
+      <div class="field">
+        <label>First name <span>*</span></label>
+        <input type="text" placeholder="First name" />
+      </div>
+      <div class="field">
+        <label>Last name <span>*</span></label>
+        <input type="text" placeholder="Last name" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label>Phone <span>*</span></label>
+        <input type="tel" placeholder="+44 000 0000 000" />
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" placeholder="you@example.com" />
+      </div>
+    </div>
+    <div class="row full">
+      <div class="field">
+        <label>Your role / relationship to property</label>
+        <select>
+          <option value="">Select...</option>
+          <option>Tenant / Occupier</option>
+          <option>Building Manager</option>
+          <option>Facilities Team</option>
+          <option>Security</option>
+          <option>Contractor on site</option>
+          <option>Other</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-label">Property &amp; location</p>
+  <div class="form-card">
+    <div class="row full">
+      <div class="field">
+        <label>Property / building name <span>*</span></label>
+        <input type="text" placeholder="e.g. 100 Liverpool Street" />
+      </div>
+    </div>
+    <div class="row three">
+      <div class="field">
+        <label>Floor / level</label>
+        <input type="text" placeholder="e.g. 4F" />
+      </div>
+      <div class="field">
+        <label>Zone / area</label>
+        <input type="text" placeholder="e.g. Server room" />
+      </div>
+      <div class="field">
+        <label>CBRE ref. no.</label>
+        <input type="text" placeholder="Optional" />
+      </div>
+    </div>
+  </div>
+
+  <p class="section-label">Incident details</p>
+  <div class="form-card">
+    <div class="row full" style="margin-bottom: 12px;">
+      <div class="field">
+        <label>Incident type <span>*</span></label>
+        <select>
+          <option value="">Select category...</option>
+          <option>Fire / Smoke</option>
+          <option>Flood / Water ingress</option>
+          <option>Power failure</option>
+          <option>Security breach / Intruder</option>
+          <option>Structural damage</option>
+          <option>HVAC / Environmental</option>
+          <option>Lift / Elevator failure</option>
+          <option>Medical emergency</option>
+          <option>Gas leak / Hazardous material</option>
+          <option>Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="row full" style="margin-bottom: 12px;">
+      <div class="field">
+        <label>Brief description <span>*</span></label>
+        <textarea placeholder="Describe what has happened, when it started, and any immediate risks or injuries…"></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label>Incident date</label>
+        <input type="date" />
+      </div>
+      <div class="field">
+        <label>Incident time</label>
+        <input type="time" />
+      </div>
+    </div>
+    <hr class="divider" />
+    <div class="row">
+      <div class="field">
+        <label>Are services affected?</label>
+        <select>
+          <option>Unknown</option>
+          <option>Yes — building-wide</option>
+          <option>Yes — partial</option>
+          <option>No</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Persons injured / at risk</label>
+        <select>
+          <option>Unknown</option>
+          <option>No</option>
+          <option>Yes — awaiting medical</option>
+          <option>Yes — medical on scene</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="submit-row">
+    <button class="cancel-btn" onclick="void(0)">Cancel</button>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <span class="timestamp" id="ts"></span>
+      <button class="submit-btn" onclick="handleSubmit()">Submit emergency report</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const ts = document.getElementById('ts');
+  function tick() {
+    const now = new Date();
+    ts.textContent = now.toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) + ' · ' + now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+  }
+  tick(); setInterval(tick, 30000);
+
+  function setPriority(btn, level) {
+    document.querySelectorAll('.priority-btn').forEach(b => b.className = 'priority-btn');
+    btn.classList.add('active-' + level.substring(0,3));
+  }
+
+  function handleSubmit() {
+    sendPrompt('The CBRE emergency contact form has been filled and submitted. Provide a confirmation reference number and next steps the reporter should follow while waiting for CBRE response.');
+  }
+</script>
